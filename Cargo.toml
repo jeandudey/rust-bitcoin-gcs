@@ -1,0 +1,9 @@
+[package]
+name = "bitcoin-gcs"
+version = "0.1.0"
+authors = ["Jean Pierre Dudey <jeandudey@hotmail.com>"]
+
+[dependencies]
+bitcoin = "0.13"
+bitstream-io = "0.6"
+siphasher = "0.2"
