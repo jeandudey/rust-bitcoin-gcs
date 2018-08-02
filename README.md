@@ -5,3 +5,10 @@ Rust implementation of
 intended to be used by bitcoin daemons and clients.
 
 [bip0158]: https://github.com/bitcoin/bips/blob/master/bip-0158.mediawiki
+
+## Creating filters
+
+To enable filter creation from [bitcoin][1] data types you need to use the 
+`builder` flag.
+
+[1]: https://github.com/rust-bitcoin/rust-bitcoin

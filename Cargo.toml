@@ -3,7 +3,16 @@ name = "bitcoin-gcs"
 version = "0.1.0"
 authors = ["Jean Pierre Dudey <jeandudey@hotmail.com>"]
 
+[features]
+builder = ["byteorder", "bitcoin"]
+
 [dependencies]
-bitcoin = "0.13"
+bitcoin = { version = "0.13", optional = true }
+byteorder = { version = "1", optional = true }
+
 bitstream-io = "0.6"
 siphasher = "0.2"
+
+
+[dev-dependencies]
+serde_json = "1"
