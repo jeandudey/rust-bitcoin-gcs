@@ -5,10 +5,7 @@ use bitcoin::util::hash::Sha256dHash;
 
 use byteorder::{LittleEndian, ByteOrder};
 
-use Filter;
-
-/// Default collision probability (2<sup>-20</sup>).
-pub const DEFAULT_P: u8 = 20;
+use {DEFAULT_P, Filter};
 
 /// A GCS filter builder.
 #[derive(Debug)]

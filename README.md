@@ -6,9 +6,10 @@ intended to be used by bitcoin daemons and clients.
 
 [bip0158]: https://github.com/bitcoin/bips/blob/master/bip-0158.mediawiki
 
-## Creating filters
+## Features
 
-To enable filter creation from [bitcoin][1] data types you need to use the 
-`builder` flag.
+- `builder`: Enables the construction of GCS filters from [*rust-bitcoin*][1]
+types.
+- `decode`: Enables the decoding of `Filters` from bytes.
 
 [1]: https://github.com/rust-bitcoin/rust-bitcoin

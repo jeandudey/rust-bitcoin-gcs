@@ -3,7 +3,7 @@ extern crate siphasher;
 
 #[cfg(feature = "builder")]
 extern crate byteorder;
-#[cfg(feature = "builder")]
+#[cfg(any(feature = "builder", feature = "decode"))]
 extern crate bitcoin;
 
 #[cfg(feature = "builder")]
@@ -14,6 +14,9 @@ use std::hash::Hasher;
 
 use bitstream_io::{BE, BitReader, BitWriter};
 use siphasher::sip::SipHasher24;
+
+/// Default collision probability (2<sup>-20</sup>).
+pub const DEFAULT_P: u8 = 20;
 
 /// Describes a serialized Golomb Coded Set (GCS) filter.
 #[derive(Debug, Clone)]
@@ -107,6 +110,27 @@ impl Filter {
             modulus_np: u64::from(n) << p,
             data,
         }
+    }
+
+    #[cfg(feature = "decode")]
+    pub fn from_nbytes(p: u8, data: &[u8]) -> Result<Filter, bitcoin::util::Error> {
+        use bitcoin::network::encodable::{ConsensusDecodable, VarInt};
+        use bitcoin::network::serialize::RawDecoder;
+        use bitcoin::util::Error;
+
+        let (n, pos) = {
+            let mut cursor = Cursor::new(data);
+            let mut decoder = RawDecoder::new(&mut cursor);
+            let n = VarInt::consensus_decode(&mut decoder)?;
+            (n.0, n.encoded_length() as usize)
+        };
+
+        if n >= u64::from(u32::max_value()) {
+            return Err(Error::ParseFailed);
+        }
+
+        let filter = Filter::from_bytes(n as u32, p, (&data[pos..]).to_vec());
+        Ok(filter)
     }
 
     // Accessors
