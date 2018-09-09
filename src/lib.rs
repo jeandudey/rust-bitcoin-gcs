@@ -274,6 +274,7 @@ fn read_full_u64(filter: &Filter, bstream: &mut BitReader<BE>) -> io::Result<u64
 	let c = bstream.read_bit()?;
 	while c {
 		quotient += 1;
+		let c = bstream.read_bit()?;
 	}
 
 	// Read P bits.
